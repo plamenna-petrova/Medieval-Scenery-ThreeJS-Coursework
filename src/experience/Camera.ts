@@ -8,16 +8,20 @@ export default class Camera {
     experience!: Experience;
     sizes!: Sizes;
     scene!: THREE.Scene;
-    canvas?: HTMLCanvasElement;
+    canvas!: HTMLCanvasElement;
     params: { [key: string]: number };
     perspectiveCamera!: THREE.PerspectiveCamera;
     controls!: OrbitControls;
 
     constructor() {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();
+        console.log('experience object');
+        console.log(this.experience);
         this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;
-        this.canvas = this.experience.canvas;
+        this.canvas = this.experience.canvas!;
+        console.log('canvas element');
+        console.log(this.canvas);
         
         this.params = {
             fov: 75,
@@ -44,6 +48,7 @@ export default class Camera {
     }
 
     setOrbitControls(): void {
+        console.log(this.canvas);
         this.controls = new OrbitControls(this.perspectiveCamera as THREE.Camera, this.canvas);
         this.controls.enableDamping = true;
     }

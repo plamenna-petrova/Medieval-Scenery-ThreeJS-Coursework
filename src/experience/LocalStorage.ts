@@ -8,7 +8,7 @@ export class LocalStorage {
     playerState!: { [key: string]: string | number };
 
     constructor() {
-        this.experience = new Experience();
+        this.experience = Experience.getInstance();
         this.camera = this.experience.camera;
 
         this.initPlayerState();

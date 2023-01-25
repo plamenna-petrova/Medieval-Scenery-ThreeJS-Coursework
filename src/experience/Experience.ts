@@ -10,8 +10,8 @@ import { Time } from "./utils/Time";
 import { assets } from './utils/assets';
 
 export class Experience {
-    static instance: Experience;
-    canvas?: HTMLCanvasElement;
+    private static instance: Experience;
+    canvas!: HTMLCanvasElement;
     sizes!: Sizes;
     time!: Time;
     scene!: THREE.Scene;
@@ -20,8 +20,10 @@ export class Experience {
     localStorage!: LocalStorage;
     resources!: Resources;
 
-    constructor (canvas?: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement) {
         if (Experience.instance) {
+            console.log('has instance');
+            console.log(Experience.instance);
             return Experience.instance;
         }
 
@@ -45,6 +47,16 @@ export class Experience {
         this.update();
     }
 
+    public static getInstance(): Experience {
+        const canvasExperienceHTMLElement = document.querySelector('canvas.experience-canvas') as HTMLCanvasElement;
+
+        if (!Experience.instance) {
+            Experience.instance = new Experience(canvasExperienceHTMLElement);
+        }
+
+        return Experience.instance;
+    }
+
     setScene(): void {
         this.scene = new THREE.Scene();
     }
@@ -57,7 +69,7 @@ export class Experience {
         this.renderer = new Renderer();
     }
 
-    setLocalStorage(): void{
+    setLocalStorage(): void {
         this.localStorage = new LocalStorage();
     }
 
@@ -87,6 +99,6 @@ export class Experience {
 
         window.requestAnimationFrame(() => {
             this.update();
-        })
+        });
     }
 }

@@ -2,12 +2,15 @@ import './main.css'
 
 import { Experience } from './experience/experience';
 
-const canvasExperienceHTMLElement = document.querySelector('canvas.experience-canvas') as HTMLCanvasElement;
+const experience1 = Experience.getInstance();
+const experience2 = Experience.getInstance();
 
-const experience: Experience = new Experience(
-  canvasExperienceHTMLElement
-);
+if (experience1 === experience2) {
+  console.log('singleton works');
+}
+
+console.log('from main ts?');
 
 console.log('test');
-console.log(experience.canvas);
+console.log(experience1.canvas);
 
