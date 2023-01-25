@@ -1,16 +1,20 @@
 import * as THREE from 'three';
+import Camera from './Camera';
+import Renderer from './Renderer';
 
 import { Sizes } from "./utils/Sizes";
 import { Time } from "./utils/Time";
 
 export class Experience {
     static instance: Experience;
-    canvas!: HTMLCanvasElement;
+    canvas?: HTMLCanvasElement;
     sizes!: Sizes;
     time!: Time;
     scene!: THREE.Scene;
+    camera!: Camera;
+    renderer!: Renderer;
 
-    constructor (canvas: HTMLCanvasElement) {
+    constructor (canvas?: HTMLCanvasElement) {
         if (Experience.instance) {
             return Experience.instance;
         }
@@ -31,11 +35,11 @@ export class Experience {
     }
 
     setCamera(): void {
-
+        this.camera = new Camera();
     }
 
     setRenderer(): void {
-
+        this.renderer = new Renderer();
     }
 
     setLocalStorage(): void{
@@ -47,10 +51,11 @@ export class Experience {
     }
 
     setWorld(): void {
-        
+
     }
 
     onResize(): void {
-
+        this.camera.onResize();
+        this.renderer.onResize();
     }
 }

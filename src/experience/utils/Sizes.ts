@@ -1,10 +1,10 @@
 import { EventEmitter } from 'events';
 
 export class Sizes extends EventEmitter {
-    width?: number;
-    height?: number;
-    aspect?: number;
-    pixelRatio?: number;
+    width!: number;
+    height!: number;
+    aspect!: number;
+    pixelRatio!: number;
 
     constructor() {
         super();
