@@ -3,7 +3,7 @@ import Camera from "./Camera";
 import { Experience } from "./Experience";
 import { Sizes } from "./utils/Sizes";
 
-export default class Renderer {
+export class Renderer {
     experience!: Experience;
     sizes!: Sizes;
     scene!: THREE.Scene;

@@ -1,10 +1,13 @@
 import * as THREE from 'three';
 import Camera from './Camera';
 import { LocalStorage } from './LocalStorage';
-import Renderer from './Renderer';
+import { Renderer } from './Renderer';
+import { Resources } from './utils/Resources';
 
 import { Sizes } from "./utils/Sizes";
 import { Time } from "./utils/Time";
+
+import { assets } from './utils/assets';
 
 export class Experience {
     static instance: Experience;
@@ -15,6 +18,7 @@ export class Experience {
     camera!: Camera;
     renderer!: Renderer;
     localStorage!: LocalStorage;
+    resources!: Resources;
 
     constructor (canvas?: HTMLCanvasElement) {
         if (Experience.instance) {
@@ -58,7 +62,7 @@ export class Experience {
     }
 
     setResources(): void {
-
+        this.resources = new Resources(assets);
     }
 
     setWorld(): void {
@@ -76,6 +80,9 @@ export class Experience {
         }
         if (this.renderer) {
             this.renderer.update();
+        }
+        if (this.time) {
+            this.time.update();
         }
 
         window.requestAnimationFrame(() => {
