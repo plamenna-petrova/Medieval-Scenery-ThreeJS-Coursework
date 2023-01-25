@@ -24,8 +24,6 @@ export class Experience {
 
     constructor(canvas: HTMLCanvasElement) {
         if (Experience.instance) {
-            console.log('has instance');
-            console.log(Experience.instance);
             return Experience.instance;
         }
 
@@ -36,13 +34,7 @@ export class Experience {
         this.sizes = new Sizes();
         this.time = new Time();
 
-        this.setScene();
-        this.setCamera();
-        this.setRenderer();
         this.setLocalStorage();
-        console.log('from experience');
-        console.log(this.localStorage);
-        this.setResources();
         this.setWorld();
 
         this.sizes.on('resize', () => {
@@ -63,49 +55,27 @@ export class Experience {
         return Experience.instance;
     }
 
-    setScene(): void {
-        this.scene = new THREE.Scene();
-    }
-
-    setCamera(): void {
-        this.camera = new Camera();
-        console.log('camera');
-        console.log(this.camera);
-    }
-
     setRenderer(): void {
         this.renderer = new Renderer();
-        console.log('renderer');
-        console.log(this.renderer);
     }
 
     setLocalStorage(): void {
         this.localStorage = new LocalStorage();
-        console.log('local storage');
-        console.log(this.localStorage);
-    }
-
-    setResources(): void {
-        this.resources = new Resources(assets);
-        console.log('resources');
-        console.log(this.resources);
     }
 
     setWorld(): void {
+        this.resources = new Resources(assets)
         this.world = new World();
         this.world.localStorage = this.localStorage;
         this.world.playerState = this.localStorage.playerState;
         this.world.resources = this.resources;
+        this.scene = new THREE.Scene();
+        this.world.scene = this.scene;
         this.world.resources.determineLoad(this.world.playerState.location);
-        this.world.resources.on('ready', () => {
-            console.log('test resources loading');
-            const geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
-            const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
-            this.scene.add(cube);
-        });
-        console.log('the worldo');
-        console.log(this.world);
+        this.world.onReadyResouces();
+        this.camera = new Camera();
+        this.renderer = new Renderer();
+        this.renderer.camera = this.camera;
     }
 
     onResize(): void {

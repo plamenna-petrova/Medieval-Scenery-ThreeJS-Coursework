@@ -4,7 +4,7 @@ export const assets = [
         settlement: {
             assets: [
                 {
-                    name: "land",
+                    name: "landscape",
                     type: "glbModel",
                     path: "../../assets/models/land_w_collider.glb",
                 },
@@ -29,22 +29,22 @@ export const assets = [
                     path: "../../assets/models/walls.glb",
                 },
                 {
-                    name: "buildings_texture",
+                    name: "buildingsTexture",
                     type: "imageTexture",
                     path: "../../assets/textures/buildings.webp",
                 },
                 {
-                    name: "items_texture",
+                    name: "itemsTexture",
                     type: "imageTexture",
                     path: "../../assets/textures/items.webp",
                 },
                 {
-                    name: "land_texture",
+                    name: "landscapeTexture",
                     type: "imageTexture",
                     path: "../../assets/textures/land.webp",
                 },
                 {
-                    name: "walls_texture",
+                    name: "wallsTexture",
                     type: "imageTexture",
                     path: "../../assets/textures/walls_baked.webp",
                 },
