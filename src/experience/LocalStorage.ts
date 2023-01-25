@@ -4,8 +4,8 @@ import { Experience } from "./experience";
 export class LocalStorage {
     experience!: Experience;
     camera!: Camera;
-    medievalSceneryState!: { [key: string]: string };
-    playerState!: { [key: string]: string | number };
+    medievalSceneryState!: any;
+    playerState!: any;
 
     constructor() {
         this.experience = Experience.getInstance();

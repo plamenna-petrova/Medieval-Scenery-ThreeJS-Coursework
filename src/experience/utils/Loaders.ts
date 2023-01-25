@@ -1,7 +1,8 @@
 import * as THREE from "three";
 
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+
 import { TextureLoader } from "three";
 
 export class Loaders {
@@ -22,7 +23,7 @@ export class Loaders {
 
         this.loaders.gltfLoader = new GLTFLoader();
         this.loaders.dracoLoader = new DRACOLoader();
-        this.loaders.dracoLoader.setDecoderPath("/draco/");
+        this.loaders.dracoLoader.setDecoderPath("../../decoder/draco/");
         this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader);
 
         this.loaders.textureLoader = new THREE.TextureLoader();

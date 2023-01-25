@@ -11,17 +11,7 @@ export class World extends EventEmitter {
 
     constructor() {
         super();
-
         this.experience = Experience.getInstance();
-        this.resources = this.experience.resources;
-
-        this.localStorage = this.experience.localStorage;
-        this.playerState = this.localStorage.playerState;
-
-        this.resources.determineLoad(this.playerState.location);
-        this.resources.on('ready', () => {
-            console.log('test resources loading')
-        });
     }
 
 }

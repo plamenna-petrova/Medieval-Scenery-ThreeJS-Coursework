@@ -8,6 +8,7 @@ import { Sizes } from "./utils/Sizes";
 import { Time } from "./utils/Time";
 
 import { assets } from './utils/assets';
+import { World } from './world/World';
 
 export class Experience {
     private static instance: Experience;
@@ -19,6 +20,7 @@ export class Experience {
     renderer!: Renderer;
     localStorage!: LocalStorage;
     resources!: Resources;
+    world!: World;
 
     constructor(canvas: HTMLCanvasElement) {
         if (Experience.instance) {
@@ -28,6 +30,7 @@ export class Experience {
         }
 
         Experience.instance = this;
+
         this.canvas = canvas;
 
         this.sizes = new Sizes();
@@ -37,6 +40,8 @@ export class Experience {
         this.setCamera();
         this.setRenderer();
         this.setLocalStorage();
+        console.log('from experience');
+        console.log(this.localStorage);
         this.setResources();
         this.setWorld();
 
@@ -48,7 +53,8 @@ export class Experience {
     }
 
     public static getInstance(): Experience {
-        const canvasExperienceHTMLElement = document.querySelector('canvas.experience-canvas') as HTMLCanvasElement;
+        const canvasExperienceHTMLElement =
+            document.querySelector('canvas.experience-canvas') as HTMLCanvasElement;
 
         if (!Experience.instance) {
             Experience.instance = new Experience(canvasExperienceHTMLElement);
@@ -63,22 +69,43 @@ export class Experience {
 
     setCamera(): void {
         this.camera = new Camera();
+        console.log('camera');
+        console.log(this.camera);
     }
 
     setRenderer(): void {
         this.renderer = new Renderer();
+        console.log('renderer');
+        console.log(this.renderer);
     }
 
     setLocalStorage(): void {
         this.localStorage = new LocalStorage();
+        console.log('local storage');
+        console.log(this.localStorage);
     }
 
     setResources(): void {
         this.resources = new Resources(assets);
+        console.log('resources');
+        console.log(this.resources);
     }
 
     setWorld(): void {
-
+        this.world = new World();
+        this.world.localStorage = this.localStorage;
+        this.world.playerState = this.localStorage.playerState;
+        this.world.resources = this.resources;
+        this.world.resources.determineLoad(this.world.playerState.location);
+        this.world.resources.on('ready', () => {
+            console.log('test resources loading');
+            const geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
+            const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const cube: THREE.Mesh = new THREE.Mesh(geometry, material);
+            this.scene.add(cube);
+        });
+        console.log('the worldo');
+        console.log(this.world);
     }
 
     onResize(): void {
