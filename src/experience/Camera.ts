@@ -9,7 +9,7 @@ export default class Camera {
     sizes!: Sizes;
     scene!: THREE.Scene;
     canvas?: HTMLCanvasElement;
-    params: { fov: number, aspect?: number, near: number, far: number };
+    params: { [key: string]: number };
     perspectiveCamera!: THREE.PerspectiveCamera;
     controls!: OrbitControls;
 
@@ -51,5 +51,9 @@ export default class Camera {
     onResize(): void {
         this.perspectiveCamera.aspect = this.sizes.aspect;
         this.perspectiveCamera.updateProjectionMatrix();
+    }
+
+    update(): void {
+        this.controls.update();
     }
 }
