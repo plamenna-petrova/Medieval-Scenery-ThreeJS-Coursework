@@ -6,6 +6,7 @@
 - [Startup](#startup)
 - [Features and installed modules](#features-and-installed-modules)
 - [Deployment](#deployment)
+- [Controls](#controls)
 
 ## Idea and Implementation
 
@@ -48,3 +49,12 @@ The project can be accessed on :
 ```
 https://medieval-scenery-three-js-coursework.vercel.app/
 ```
+
+## Controls
+
+Use the following keys, in order to move around the medieval scenery:
+
+- WASD - walk in forward, left, backward and right directions respectively
+- W + Left Shift - sprint
+- Space bar - jump
+- Esc - lock / unlock pointer 
