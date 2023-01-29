@@ -60,6 +60,8 @@ Use the following keys, in order to move around the medieval scenery:
 - Space bar - jump
 - Esc - lock / unlock pointer
 
+Click with the left mouse button to start the session.
+
 ## Presentation Images
 
 Link to the subfolder, containing images, focusing on important aspects of the project:
