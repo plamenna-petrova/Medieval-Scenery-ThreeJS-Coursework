@@ -7,7 +7,7 @@ import { Resources } from './utils/Resources';
 import { Sizes } from "./utils/Sizes";
 import { Time } from "./utils/Time";
 
-import { assets } from './utils/assets';
+import { assets } from './utils/assets.js';
 import { World } from './world/World';
 
 export class Experience {
