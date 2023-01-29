@@ -51,6 +51,8 @@ export class World extends EventEmitter {
                 this.player.initPlayer();
                 this.player.initControls();
                 this.player.addEventListeners();
+                const loaderElement: HTMLDivElement = document.querySelector('.loading')!;
+                loaderElement.style.display = 'none';
             }
         });
     }

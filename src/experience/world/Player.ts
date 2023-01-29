@@ -174,7 +174,7 @@ export class Player extends EventEmitter {
         );
     }
 
-    updateRaycaster() {
+    updateRaycaster(): void {
         this.player.raycaster.ray.origin.copy(
             this.camera.perspectiveCamera.position
         );
@@ -184,7 +184,7 @@ export class Player extends EventEmitter {
         );
     }
 
-    update() {
+    update(): void {
         this.updateMovement();
         this.updateRaycaster();
     }
