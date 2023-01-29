@@ -1,5 +1,5 @@
 import Camera from "./Camera";
-import { Experience } from "./experience";
+import { Experience } from "./Experience";
 
 export class LocalStorage {
     experience!: Experience;
