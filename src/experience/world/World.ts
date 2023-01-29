@@ -6,6 +6,8 @@ import { Resources } from "../utils/Resources";
 
 import { Octree } from "three/examples/jsm/math/Octree";
 
+// import { OctreeHelper } from "three/examples/jsm/helpers/OctreeHelper.js";
+
 import { Player } from './Player';
 import Camera from '../Camera';
 import { Time } from '../utils/Time';
@@ -38,6 +40,9 @@ export class World extends EventEmitter {
         this.player = null;
 
         this.resources.on('ready', () => {
+            this.setMaterials();
+            this.setLandscapeCollider();
+
             if (this.player === null) {
                 this.player = new Player();
                 this.player.time = this.time;
@@ -47,8 +52,6 @@ export class World extends EventEmitter {
                 this.player.initControls();
                 this.player.addEventListeners();
             }
-            this.setMaterials();
-            this.setLanscapeCollider();
         });
     }
 
@@ -107,14 +110,13 @@ export class World extends EventEmitter {
         this.scene.background = this.skyboxTexture;
     }
 
-    setLanscapeCollider(): void {
+    setLandscapeCollider(): void {
         const collider = this.landscape.getObjectByName('collider')! as any;
         this.octree.fromGraphNode(collider);
         collider.removeFromParent();
         collider.geometry.dispose();
         collider.material.dispose();
 
-        // set on / off octree helper visibility
         // const helper = new OctreeHelper(this.octree, '#00FF00');
         // helper.visible = true;
         // this.scene.add(helper);

@@ -12,8 +12,6 @@ export class Player extends EventEmitter {
     octree!: Octree;
     player = {} as any;
     actions!: any;
-    currentIntersectObject: any;
-    previousIntersectObject: any;
 
     constructor() {
         super();
@@ -60,11 +58,6 @@ export class Player extends EventEmitter {
         document.addEventListener("keyup", this.onKeyUp);
         document.addEventListener("pointermove", this.onDesktopPointerMove);
         document.addEventListener("pointerdown", this.onPointerDown);
-    }
-
-    update(): void {
-        this.updateMovement();
-        this.updateRaycaster();
     }
 
     detectPlayerCollisions(): void {
@@ -170,6 +163,10 @@ export class Player extends EventEmitter {
         }
     }
 
+    setInteractionObjects(interactionObjects: any): void {
+        this.player.interactionObjects = interactionObjects;
+    }
+
     getCameraLookAtDirectionalVector(): any {
         const direction: Vector3 = new THREE.Vector3(0, 0, -1);
         return direction.applyQuaternion(
@@ -185,20 +182,11 @@ export class Player extends EventEmitter {
         this.player.raycaster.ray.direction.copy(
             this.getCameraLookAtDirectionalVector()
         );
+    }
 
-        // const intersects = this.player.raycaster.intersectObjects(
-        //     this.player.interactionObjects.children
-        // );
-
-        // if (intersects.length === 0) {
-        //     this.currentIntersectObject = "";
-        // } else {
-        //     this.currentIntersectObject = intersects[0].object.name;
-        // }
-
-        // if (this.currentIntersectObject !== this.previousIntersectObject) {
-        //     this.previousIntersectObject = this.currentIntersectObject;
-        // }
+    update() {
+        this.updateMovement();
+        this.updateRaycaster();
     }
 
     private onKeyDown = (event: any): void => {

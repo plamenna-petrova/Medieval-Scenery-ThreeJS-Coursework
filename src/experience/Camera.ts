@@ -27,7 +27,6 @@ export default class Camera {
         };
 
         this.setPerspectiveCamera();
-        this.setOrbitControls();
     }
 
     setPerspectiveCamera(): void {
@@ -43,21 +42,8 @@ export default class Camera {
         this.scene.add(this.perspectiveCamera);
     }
 
-    setOrbitControls(): void {
-        console.log(this.canvas);
-        this.controls = new OrbitControls(
-            this.perspectiveCamera as THREE.Camera, 
-            this.canvas
-        );
-        this.controls.enableDamping = true;
-    }
-
     onResize(): void {
         this.perspectiveCamera.aspect = this.sizes.aspect;
         this.perspectiveCamera.updateProjectionMatrix();
-    }
-
-    update(): void {
-        this.controls.update();
     }
 }

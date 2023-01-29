@@ -86,9 +86,6 @@ export class Experience {
     }
 
     update() {
-        if (this.camera) {
-            this.camera.update();
-        }
         if (this.renderer) {
             this.renderer.update();
         }
