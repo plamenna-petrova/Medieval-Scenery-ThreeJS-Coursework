@@ -7,6 +7,7 @@
 - [Features and installed modules](#features-and-installed-modules)
 - [Deployment](#deployment)
 - [Controls](#controls)
+- [Presentation Images](#presentation-images)
 
 ## Idea and Implementation
 
@@ -57,4 +58,12 @@ Use the following keys, in order to move around the medieval scenery:
 - WASD - walk in forward, left, backward and right directions respectively
 - W + Left Shift - sprint
 - Space bar - jump
-- Esc - lock / unlock pointer 
+- Esc - lock / unlock pointer
+
+## Presentation Images
+
+Link to the subfolder, containing images, focusing on important aspects of the project:
+
+```
+https://github.com/plamenna-petrova/Medieval-Scenery-ThreeJS-Coursework/tree/master/src/presentation-images
+```
