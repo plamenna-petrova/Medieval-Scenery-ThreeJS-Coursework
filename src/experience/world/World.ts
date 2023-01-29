@@ -6,7 +6,9 @@ import { Resources } from "../utils/Resources";
 
 import { Octree } from "three/examples/jsm/math/Octree";
 
-import { OctreeHelper } from "three/examples/jsm/helpers/OctreeHelper.js";
+import { Player } from './Player';
+import Camera from '../Camera';
+import { Time } from '../utils/Time';
 
 export class World extends EventEmitter {
     resources!: Resources;
@@ -22,16 +24,29 @@ export class World extends EventEmitter {
     wallsTexture!: Texture;
     skyboxTexture!: Texture;
     scene!: THREE.Scene;
-    octree: Octree;
+    octree!: Octree;
+    time!: Time;
+    camera!: Camera;
+    player!: Nullable<Player>;
 
     constructor() {
         super();
-
         this.octree = new Octree();
     }
 
     onReadyResouces(): void {
+        this.player = null;
+
         this.resources.on('ready', () => {
+            if (this.player === null) {
+                this.player = new Player();
+                this.player.time = this.time;
+                this.player.camera = this.camera;
+                this.player.octree = this.octree;
+                this.player.initPlayer();
+                this.player.initControls();
+                this.player.addEventListeners();
+            }
             this.setMaterials();
             this.setLanscapeCollider();
         });
@@ -99,8 +114,17 @@ export class World extends EventEmitter {
         collider.geometry.dispose();
         collider.material.dispose();
 
-        const helper = new OctreeHelper(this.octree, '#00FF00');
-        helper.visible = true;
-        this.scene.add(helper);
+        // set on / off octree helper visibility
+        // const helper = new OctreeHelper(this.octree, '#00FF00');
+        // helper.visible = true;
+        // this.scene.add(helper);
+    }
+
+    update(): void {
+        if (this.player) {
+            this.player.update();
+        }
     }
 }
+
+export type Nullable<T> = T | null;

@@ -75,6 +75,8 @@ export class Experience {
         this.world.resources = this.resources;
         this.world.scene = this.scene;
         this.world.resources.determineLoad(this.world.playerState.location);
+        this.world.time = this.time;
+        this.world.camera = this.camera;
         this.world.onReadyResouces();
     }
 
@@ -92,6 +94,9 @@ export class Experience {
         }
         if (this.time) {
             this.time.update();
+        }
+        if (this.world) {
+            this.world.update();
         }
 
         window.requestAnimationFrame(() => {
