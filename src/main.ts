@@ -1,9 +1,7 @@
 import './main.css'
 
-import { Experience } from './experience/experience';
+import { Experience } from './experience/Experience';
 
-const experience = Experience.getInstance();
-
-console.log(experience);
+Experience.getInstance();
 
 
