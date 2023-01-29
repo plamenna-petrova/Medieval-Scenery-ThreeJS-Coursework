@@ -64,18 +64,18 @@ export class Experience {
     }
 
     setWorld(): void {
+        this.scene = new THREE.Scene();
+        this.camera = new Camera();
+        this.renderer = new Renderer();
+        this.renderer.camera = this.camera;
         this.resources = new Resources(assets)
         this.world = new World();
         this.world.localStorage = this.localStorage;
         this.world.playerState = this.localStorage.playerState;
         this.world.resources = this.resources;
-        this.scene = new THREE.Scene();
         this.world.scene = this.scene;
         this.world.resources.determineLoad(this.world.playerState.location);
         this.world.onReadyResouces();
-        this.camera = new Camera();
-        this.renderer = new Renderer();
-        this.renderer.camera = this.camera;
     }
 
     onResize(): void {

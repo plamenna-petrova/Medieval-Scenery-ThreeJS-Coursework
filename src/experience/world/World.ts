@@ -4,42 +4,103 @@ import { Group, Texture } from "three";
 import { LocalStorage } from "../LocalStorage";
 import { Resources } from "../utils/Resources";
 
+import { Octree } from "three/examples/jsm/math/Octree";
+
+import { OctreeHelper } from "three/examples/jsm/helpers/OctreeHelper.js";
+
 export class World extends EventEmitter {
     resources!: Resources;
     localStorage!: LocalStorage;
     playerState!: { [key: string]: string | number };
     landscape!: Group;
     landscapeTexture!: Texture;
+    buildings!: Group;
+    buildingsTexture!: Texture;
+    items!: Group;
+    itemsTexture!: Texture;
+    walls!: Group;
+    wallsTexture!: Texture;
+    skyboxTexture!: Texture;
     scene!: THREE.Scene;
+    octree: Octree;
 
     constructor() {
         super();
+
+        this.octree = new Octree();
     }
 
     onReadyResouces(): void {
         this.resources.on('ready', () => {
             this.setMaterials();
+            this.setLanscapeCollider();
         });
     }
 
     setMaterials(): void {
         this.landscape = this.resources.items.settlement.landscape.scene;
         this.landscapeTexture = this.resources.items.settlement.landscapeTexture;
-
         this.landscapeTexture.flipY = false;
         this.landscapeTexture.encoding = THREE.sRGBEncoding;
-
-        console.log('landscape children');
-        console.log(this.landscape.children);
 
         this.landscape.children.find((child: any) => {
             child.material = new THREE.MeshBasicMaterial({
                 map: this.landscapeTexture
             });
-            console.log('child material');
-            console.log(child.material);
         });
 
+        this.buildings = this.resources.items.settlement.buildings.scene;
+        this.buildingsTexture = this.resources.items.settlement.buildingsTexture;
+        this.buildingsTexture.flipY = false;
+        this.buildingsTexture.encoding = THREE.sRGBEncoding;
+
+        this.buildings.children.find((child: any) => {
+            child.material = new THREE.MeshBasicMaterial({
+                map: this.buildingsTexture,
+            });
+        });
+
+        this.items = this.resources.items.settlement.items.scene;
+        this.itemsTexture = this.resources.items.settlement.itemsTexture;
+        this.itemsTexture.flipY = false;
+        this.itemsTexture.encoding = THREE.sRGBEncoding;
+
+        this.items.children.find((child: any) => {
+            child.material = new THREE.MeshBasicMaterial({
+                map: this.itemsTexture,
+            });
+        });
+
+        this.walls = this.resources.items.settlement.walls.scene;
+        this.wallsTexture = this.resources.items.settlement.wallsTexture;
+        this.wallsTexture.flipY = false;
+        this.wallsTexture.encoding = THREE.sRGBEncoding;
+
+        this.walls.children.find((child: any) => {
+            child.material = new THREE.MeshBasicMaterial({
+                map: this.wallsTexture,
+            });
+        });
+
+        this.skyboxTexture = this.resources.items.settlement.skyBoxTexture;
+        this.skyboxTexture.encoding = THREE.sRGBEncoding;
+
         this.scene.add(this.landscape);
+        this.scene.add(this.buildings);
+        this.scene.add(this.items);
+        this.scene.add(this.walls);
+        this.scene.background = this.skyboxTexture;
+    }
+
+    setLanscapeCollider(): void {
+        const collider = this.landscape.getObjectByName('collider')! as any;
+        this.octree.fromGraphNode(collider);
+        collider.removeFromParent();
+        collider.geometry.dispose();
+        collider.material.dispose();
+
+        const helper = new OctreeHelper(this.octree, '#00FF00');
+        helper.visible = true;
+        this.scene.add(helper);
     }
 }
